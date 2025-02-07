@@ -4,6 +4,7 @@ import com.ex.library.dto.request.MaintenanceRequest;
 import com.ex.library.dto.response.APIResponse;
 import com.ex.library.dto.response.MaintenanceResponse;
 import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.availability.ApplicationAvailability;
 import org.springframework.boot.availability.AvailabilityChangeEvent;
@@ -15,17 +16,13 @@ import java.util.Date;
 
 @Slf4j
 @RestController
+@AllArgsConstructor
 @RequestMapping("/maintenance")
 public class MaintenanceController {
 
     private final ApplicationEventPublisher eventPublisher;
 
     private final ApplicationAvailability availability;
-
-    public MaintenanceController(ApplicationEventPublisher eventPublisher, ApplicationAvailability applicationAvailability) {
-        this.eventPublisher = eventPublisher;
-        this.availability = applicationAvailability;
-    }
 
     @GetMapping
     public APIResponse<MaintenanceResponse> checkSystemInMaintenance() {

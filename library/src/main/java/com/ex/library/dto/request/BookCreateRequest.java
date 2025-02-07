@@ -12,7 +12,6 @@ import java.util.Date;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class BookCreateRequest {
 
-    private String id;
     private String name;
     private String author;
     private String publisher;

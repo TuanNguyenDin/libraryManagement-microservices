@@ -67,7 +67,7 @@ public class BookController {
     public APIResponse<?> uploadCSV(@RequestParam("file") MultipartFile file) {
         if (file.isEmpty()) {
             return APIResponse.builder()
-                    .message("File CSV trống!")
+                    .message("File CSV is empty!")
                     .build();
         }
 

@@ -1,5 +1,6 @@
 package com.ex.library.dto.request;
 
+import jakarta.validation.constraints.Future;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -16,6 +17,7 @@ public class BorrowRequest {
 
     private String memberId;
     private String bookId;
+    @Future
     private Date returnDate;
     private boolean isReturned = false;
 }

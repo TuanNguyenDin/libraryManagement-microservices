@@ -37,14 +37,17 @@ public class EmailService {
     @Value("${spring.mail.brevo.apikey}")
     String brevoApiKey;
 
+    @NonFinal
+    EmailInforRequest sender = EmailInforRequest.builder()
+            .name("TuanSPM")
+            .email("dinhtuann987161@gmail.com")
+            .build();
+
     public EmailResponse sendEmail(SendEmailRequest emailRequest, String mailTemplate, String verifyCode, String verifyUrl) throws MessagingException {
 
 
         EmailRequest email = EmailRequest.builder()
-                .sender(EmailInforRequest.builder()
-                        .name("TuanSPM")
-                        .email("dinhtuann987161@gmail.com")
-                        .build())
+                .sender(sender)
                 .to(List.of(emailRequest.getTo()))
                 .subject(emailRequest.getSubject())
                 .htmlContent(createContextSend(emailRequest, mailTemplate, verifyUrl, verifyCode))

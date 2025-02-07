@@ -58,8 +58,6 @@ public class UserController {
 
     @PostMapping("/search-by-date")
     APIResponse<List<Users>> searchByDate(@RequestBody Date begindate, Date endDate) {
-        log.info("began search by date{}", begindate);
-        log.info("end search by date{}", endDate);
         return userService.findUserFollowDate(begindate, endDate);
     }
 

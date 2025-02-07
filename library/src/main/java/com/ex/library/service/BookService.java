@@ -6,7 +6,6 @@ import java.util.List;
 import com.ex.library.dto.request.BorrowRequest;
 import com.ex.library.dto.response.APIResponse;
 import com.ex.library.dto.request.BookCreateRequest;
-import com.ex.library.dto.response.BookResponse;
 import com.ex.library.entity.Book;
 import com.ex.library.entity.BooksBorrowed;
 import com.ex.library.exception.CustomException;
@@ -132,7 +131,7 @@ public class BookService {
 
     @Transactional(rollbackFor = Exception.class)
     public void addBooksFormList(List<Book> books) {
-        books = books.stream().distinct().toList(); // Remove duplicates based on equals() and hashCode()
+        books = books.stream().distinct().toList();         // Remove duplicates based on equals() and hashCode()
         List<Book> result = new java.util.ArrayList<>(books);
         books.forEach(book -> {
             if (bookRepository.existsByName(book.getName())
@@ -148,7 +147,6 @@ public class BookService {
     }
 
     public Page<Book> searchBooks(String title, String author, String category, int page, int size) {
-        log.info("this function in processing....");
         Specification<Object> spec = Specification.where(BookSpecifications.hasName(title))
                 .and(BookSpecifications.hasAuthor(author))
                 .and(BookSpecifications.hasGenre(category));

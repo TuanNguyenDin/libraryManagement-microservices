@@ -9,6 +9,7 @@ import com.ex.library.entity.InvalidateToken;
 import com.ex.library.entity.Users;
 import com.ex.library.exception.CustomException;
 import com.ex.library.exception.ErrorCode;
+import com.ex.library.exception.HttpResponseErrorCustomException;
 import com.ex.library.repository.InvalidateTokenRepository;
 import com.ex.library.repository.UserRepository;
 import com.nimbusds.jose.*;
@@ -24,6 +25,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
@@ -138,18 +140,18 @@ public class AuthenticationService {
         log.info(expirationTime.toString());
 
         if (!verify || expirationTime.before(new Date())) {
-            throw new CustomException(ErrorCode.UNAUTHENTICATED);
+            throw new HttpResponseErrorCustomException(HttpStatus.UNAUTHORIZED.value(), ErrorCode.UNAUTHENTICATED.getMessage());
         }
 
         if (invalidateTokenRepository.existsById(signedJWT.getJWTClaimsSet().getJWTID())) {
-            throw new CustomException(ErrorCode.UNAUTHENTICATED);
+            throw new HttpResponseErrorCustomException(HttpStatus.UNAUTHORIZED.value(), ErrorCode.INVALID_VALUE_INPUT.getMessage());
         }
 
         return signedJWT;
     }
 
     private String generateToken(String name) {
-        Users users = repository.findOneByName(name);
+        Users users = repository.findOneByName(name);        // username is unique so it okay to find one
         return generateToken(users);
     }
 

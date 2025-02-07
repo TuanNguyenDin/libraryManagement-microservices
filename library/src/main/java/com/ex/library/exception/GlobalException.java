@@ -53,7 +53,7 @@ public class GlobalException {
     public ResponseEntity<String> handleHttpServerError(HttpServerErrorException ex) {
         HttpResponseErrorCustomException errorResponse = new HttpResponseErrorCustomException(
                 ex.getStatusCode().value(),
-                "Server: " + ex.getMessage()
+                "Server: " + ex.getClass().getSimpleName()
         );
         HttpStatus httpStatus = (HttpStatus) ex.getStatusCode();
         return ResponseEntity.status(httpStatus).body(errorResponse.getMessage());

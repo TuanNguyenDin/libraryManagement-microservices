@@ -1,7 +1,6 @@
 package com.ex.library.entity;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Future;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -17,15 +16,21 @@ public class BooksBorrowed {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
+    @Column(name = "id")
     private String id;
+    @Column(name = "borrow_date")
     private Date borrowDate;
-    @Future
+    @Column(name = "return_date")
     private Date returnDate;
+    @Column(name = "is_returned")
     private boolean isReturned = false;
 
+    @NonNull
     @ManyToOne
     @JoinColumn(name = "books.id", nullable = false)
     Book book;
+
+    @NonNull
     @ManyToOne
     @JoinColumn(name = "users.id", nullable = false)
     Users users;

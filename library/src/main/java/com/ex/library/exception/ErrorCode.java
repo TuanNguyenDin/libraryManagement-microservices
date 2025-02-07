@@ -7,7 +7,7 @@ public enum ErrorCode {
     USER_EXISTED(1002, "user existed!"),
     EMAIL_EXISTED(1003, "email existed!"),
     WRONG_PASSWORD(1004, "Wrong password"),
-    UNAUTHENTICATED(1005, "Unauthenticated"),
+    UNAUTHENTICATED(403, "User is unauthenticated"),
     SEND_MAIL_ERROR(1006, "Cannot send mail this time, please try again later"),
     USER_INACTIVE(1007, "User is inactive. Activate the user first!"),
     CODE_NOT_FOUND(1008, "Code not found!"),

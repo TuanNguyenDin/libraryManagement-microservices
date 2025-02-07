@@ -16,10 +16,12 @@ import jakarta.mail.MessagingException;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpClientErrorException;
 
 import java.util.Date;
 import java.util.List;
@@ -120,6 +122,10 @@ public class UserService {
         Users user = checkUserExist(id, request.getEmail(), request.getName());
         APIResponse<Users> usersAPIResponse = new APIResponse<>();
 
+        if (user != null) {
+            throw new HttpClientErrorException(HttpStatus.NOT_FOUND);
+        }
+
         if (user.isActive()) {
 
             String password = request.getPassword();
@@ -143,7 +149,7 @@ public class UserService {
         Users users = userRepository.findById(id).orElseThrow(()
                 -> new CustomException(ErrorCode.USER_NOT_EXISTED));
         APIResponse<Users> response = new APIResponse<>();
-        if (users.isActive()) {
+        if (users != null) {
             userRepository.deleteById(id);
             response.setMessage("User has been delete");
         }
