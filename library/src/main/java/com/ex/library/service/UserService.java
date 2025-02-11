@@ -175,6 +175,10 @@ public class UserService {
     public APIResponse<UserResponse> changeUserEmail(String userId, String newEmail) throws MessagingException {
         Users user = checkUserExist(userId, "", "");
 
+        if (user.getEmail().equals(newEmail)) {
+            throw  new CustomException(ErrorCode.EMAIL_EXISTED);
+        }
+
         VerifyCodeChangeEmail code = generateVerifyCode(user);
         user.setEmail(newEmail);
         verifyCodeRepository.save(code);
