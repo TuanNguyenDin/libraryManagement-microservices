@@ -1,23 +1,18 @@
-package com.ex.library.service;
+package com.example.book_services.services;
 
-import com.ex.library.entity.Book;
-import com.ex.library.mapper.BookMapper;
-import lombok.extern.slf4j.Slf4j;
+import com.example.book_services.entity.Book;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
-@Slf4j
 @Service
 public class CSVReader {
 
@@ -43,7 +38,7 @@ public class CSVReader {
             }
 
         } catch (IOException e) {
-            log.error(e.getMessage(), e);
+            e.printStackTrace();
             throw new RuntimeException("Error when read file CSV: " + e.getMessage());
         }
 

@@ -3,19 +3,22 @@ package com.example.book_services.entity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.experimental.FieldDefaults;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 
 @Entity
 @Data
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
+@EntityListeners(AuditingEntityListener.class)
 public class Book {
 
     @Id
@@ -23,7 +26,7 @@ public class Book {
     @Column(name = "id", nullable = false, unique = true)
     private String id;
     @NotEmpty
-    @Column(name = "name", nullable = false, unique = true)
+    @Column(name = "name", nullable = false)
     private String name;
     @Column(name = "author")
     private String author;
@@ -43,7 +46,10 @@ public class Book {
     @Min(0)
     @Column(name = "available_quantity")
     private int availableQuantity;
-    private Date createdAt;
-    private Date updatedAt;
+    @CreatedDate
+    @Column(updatable = false)
+    private Timestamp createdAt;
+    @LastModifiedDate
+    private Timestamp updatedAt;
 
 }

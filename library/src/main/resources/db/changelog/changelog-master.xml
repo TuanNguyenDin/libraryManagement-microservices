@@ -9,5 +9,8 @@
         <sql>
             TRUNCATE `library`.`invalidate_token`;
         </sql>
+        <sql>
+            TRUNCATE `library`.`verify_code_change_email;`;
+        </sql>
     </changeSet>
 </databaseChangeLog>

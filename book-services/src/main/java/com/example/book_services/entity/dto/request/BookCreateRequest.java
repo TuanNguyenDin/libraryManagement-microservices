@@ -21,7 +21,5 @@ public class BookCreateRequest {
     private String coverImageUrl;
     private int quantity;
     private int availableQuantity;
-    private Date createdAt;
-    private Date updatedAt;
 
 }
