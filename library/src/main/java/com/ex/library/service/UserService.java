@@ -80,7 +80,7 @@ public class UserService {
         user = userMapper.toUser(request);
         Users save = userRepository.save(user);
 
-        String url = "localhost/user/verify/";
+        String url = "localhost:8081/api/user/verify/";
         SendEmailRequest mailComform = SendEmailRequest.builder()
                 .to(EmailInforRequest.builder()
                         .name(user.getName())
@@ -174,6 +174,10 @@ public class UserService {
     @Transactional(rollbackOn = Exception.class)
     public APIResponse<UserResponse> changeUserEmail(String userId, String newEmail) throws MessagingException {
         Users user = checkUserExist(userId, "", "");
+
+        if (user.getEmail().equals(newEmail)) {
+            throw  new CustomException(ErrorCode.EMAIL_EXISTED);
+        }
 
         VerifyCodeChangeEmail code = generateVerifyCode(user);
         user.setEmail(newEmail);
@@ -277,7 +281,7 @@ public class UserService {
         user.setActive(false);
         user.setUpdateAt(new java.sql.Date(System.currentTimeMillis()));
 
-        // userRepository.save(user);
+         userRepository.save(user);
 
         // Send confirmation email
         SendEmailRequest mailConfirm = SendEmailRequest.builder()
@@ -343,7 +347,7 @@ public class UserService {
         VerifyCodeChangeEmail code = VerifyCodeChangeEmail.builder()
                 .code(verifyCode)
                 .users(user)
-                .expiryDate(new Date(System.currentTimeMillis() + 3600000))
+                .expiryDate(new Date(System.currentTimeMillis() + 5*60*1000))
                 .oldEmail(user.getEmail())
                 .build();
         return code;

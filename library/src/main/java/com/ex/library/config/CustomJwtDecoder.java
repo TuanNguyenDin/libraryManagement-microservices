@@ -38,7 +38,7 @@ public class CustomJwtDecoder implements JwtDecoder {
             );
             if (!response.isValid()) {throw new JwtException("Token expired!");}
         } catch (ParseException | JOSEException e) {
-            e.printStackTrace();
+            log.error(e.getMessage(), e);
             throw new JwtException(e.getMessage());
         }
         if (Objects.isNull(nimbusJwtDecoder)) {

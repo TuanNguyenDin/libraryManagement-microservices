@@ -2,6 +2,7 @@ package com.ex.library.service;
 
 import com.ex.library.entity.Book;
 import com.ex.library.mapper.BookMapper;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
@@ -16,6 +17,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 @Service
 public class CSVReader {
 
@@ -41,7 +43,7 @@ public class CSVReader {
             }
 
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error(e.getMessage(), e);
             throw new RuntimeException("Error when read file CSV: " + e.getMessage());
         }
 

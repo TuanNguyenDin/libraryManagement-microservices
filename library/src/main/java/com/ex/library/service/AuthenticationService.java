@@ -64,7 +64,7 @@ public class AuthenticationService {
         try {
             verifyToken(token);
         } catch (CustomException e) {
-            e.printStackTrace();
+            log.error(e.getMessage(), e);
             validToken = false;
         }
 

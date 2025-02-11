@@ -57,7 +57,7 @@ public class EmailService {
             log.info("Create email success");
             return emailClient.sendEmail(brevoApiKey, email);
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error(e.getMessage(), e);
             throw new CustomException(ErrorCode.SEND_MAIL_ERROR);
         }
     }

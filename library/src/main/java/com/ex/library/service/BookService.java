@@ -122,7 +122,7 @@ public class BookService {
                 response.setMessage("Book is out of stock!");
             }
         } catch (RuntimeException e) {
-            e.printStackTrace();
+            log.error(e.getMessage(), e);
             throw new RuntimeException(e);
         }
 
